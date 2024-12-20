@@ -9,13 +9,19 @@ export interface Manipulator {
   from: From;
   to?: To[];
   to_after_key_up?: To[];
+  to_if_held_down?: To[];
   to_if_alone?: To[];
+  to_delayed_action?; 
   parameters?: Parameters;
   conditions?: Conditions[];
 }
 
 export interface Parameters {
   "basic.simultaneous_threshold_milliseconds"?: number;
+  "basic.to_if_alone_timeout_milliseconds"?: number;
+  "basic.to_if_held_down_threshold_milliseconds"?: number;
+  "basic.to_delayed_action_delay_milliseconds"?: number;
+  
 }
 
 type Conditions =
@@ -113,6 +119,7 @@ type ModifiersKeys =
   | "right_alt"
   | "right_gui"
   | "any";
+ 
 
 export interface From {
   key_code?: KeyCode;
@@ -128,6 +135,7 @@ export interface Modifiers {
 
 export interface To {
   key_code?: KeyCode;
+  parameters?: Parameters;
   modifiers?: ModifiersKeys[];
   shell_command?: string;
   set_variable?: {
@@ -136,6 +144,7 @@ export interface To {
   };
   mouse_key?: MouseKey;
   pointing_button?: string;
+  lazy?: string;
   /**
    * Power Management plugin
    * @example: sleep system
@@ -154,6 +163,7 @@ export interface MouseKey {
 
 export interface SoftwareFunction {
   iokit_power_management_sleep_system?: {};
+  open_application?: {};
 }
 
 export type KeyCode =
@@ -259,6 +269,8 @@ export type KeyCode =
   | "f24"
   //   not_to: true
   | "display_brightness_decrement"
+  //   not in mxstrbrs original config but in tit nonetheless 
+  | "dictation"
   //   not_from: true
   | "display_brightness_increment"
   //   not_from: true
