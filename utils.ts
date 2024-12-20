@@ -5,6 +5,7 @@ import { To, KeyCode, Manipulator, KarabinerRules } from "./types";
  */
 export interface LayerCommand {
   to: To[];
+  to_if_held_down?: To[];
   description?: string;
 }
 
